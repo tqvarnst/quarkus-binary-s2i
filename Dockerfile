@@ -1,5 +1,5 @@
 # [Quarkus.io](http://quarkus.io) *native* S2I builder
-# Original Author: Michael Vorburger.ch
+# Original Author: Thomas Qvarnstrom
 
 # This shoud be update to a stable version of UBI when available
 FROM registry.access.redhat.com/ubi8/ubi 

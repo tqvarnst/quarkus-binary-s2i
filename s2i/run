@@ -11,14 +11,4 @@ else
   echo "Using custom Java opts from environment QUARKUS_OPTS=${QUARKUS_OPTS}"
 fi
 
-cd /opt/quarkus/src/
-
-if [ "$(find . -type f | grep "\-runner$" | wc -l  | sed 's/ //g')" -eq "1" ]; then
-  application=$(find . -type f | grep "\-runner$")
-  runcmd="${application} ${QUARKUS_OPTS}"
-  exec ${runcmd}
-else
-  >&2 echo "Could not locate a native image. Have you build a native image using mvn -Pnative before?"
-  exit 1
-fi
-
+exec /opt/quarkus/application ${QUARKUS_OPTS}

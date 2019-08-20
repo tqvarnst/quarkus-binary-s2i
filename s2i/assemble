@@ -1,1 +1,11 @@
 #!/bin/sh
+echo "Assemblying"
+
+if [ "$(find /opt/quarkus/src/ -type f | grep "\-runner$" | wc -l  | sed 's/ //g')" -eq "1" ]; then
+  app_path=$(find /opt/quarkus/src/ -type f | grep "\-runner$")
+  cp -v ${app_path} /opt/quarkus/application
+  chmod +x /opt/quarkus/application
+else
+  >&2 echo "Could not locate a native image. Have you build a native image using mvn -Pnative before?"
+  exit 1
+fi
