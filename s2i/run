@@ -11,4 +11,4 @@ else
   echo "Using custom Java opts from environment QUARKUS_OPTS=${QUARKUS_OPTS}"
 fi
 
-exec /opt/quarkus/application ${QUARKUS_OPTS}
+exec /opt/quarkus/application ${QUARKUS_OPTS} -Dquarkus.http.host=0.0.0.0
