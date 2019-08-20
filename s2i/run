@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# This POC script is (intentionally) overly trivial.
+# a TODO future PRODUCTION version of this would probably want tomake it possible to
+# e.g. pass additional parameters to the executable, as does fabric8io-images/s2i's run script.
+
+if [ -z "$QUARKUS_OPTS" ]; then
+  QUARKUS_OPTS="-Xmx12M -Xms8M -Xmn12M"
+  echo "QUARKUS_OPTS environment variable was not set, using default values of ${QUARKUS_OPTS}"
+else
+  echo "Using custom Java opts from environment QUARKUS_OPTS=${QUARKUS_OPTS}"
+fi
+
+cd /opt/quarkus/src/
+
+if [ "$(find . -type f | grep "\-runner$" | wc -l  | sed 's/ //g')" -eq "1" ]; then
+  application=$(find . -type f | grep "\-runner$")
+  runcmd="${application} ${QUARKUS_OPTS}"
+  exec ${runcmd}
+else
+  >&2 echo "Could not locate a native image. Have you build a native image using mvn -Pnative before?"
+  exit 1
+fi
+
